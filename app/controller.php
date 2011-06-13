@@ -1,0 +1,98 @@
+<?php
+	/****
+		*	File: controller.php
+		*	Descrizione: Classe astratta per definizione dei controller
+		*
+		*	Author: D4ng3R <mich.loris@gmail.com>
+
+		    This file is part of :PooF.
+
+		    :PooF is free software: you can redistribute it and/or modify
+		    it under the terms of the GNU General Public License as published by
+		    the Free Software Foundation, either version 3 of the License, or
+		    (at your option) any later version.
+
+		    :PooF is distributed in the hope that it will be useful,
+		    but WITHOUT ANY WARRANTY; without even the implied warranty of
+		    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+		    GNU General Public License for more details.
+
+		    You should have received a copy of the GNU General Public License
+		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
+	*****/
+
+	abstract class Controllers {
+		protected $system = null;
+		protected $view = null;
+		protected $vars = array();
+		protected $args = array();
+		protected $securePage = false;
+		
+		function __construct($args=array()) {					
+			$this->system = system::getInstance();						
+			$this->args = $args;									// Carico in locale le variabili GET	
+			if(!isset($this->args[_SID_GET_VAR]))						// Se non definito imposto un SID nullo
+				$this->args[_SID_GET_VAR] = "";								
+		}
+
+		public function __set($index, $value) {
+			$this->vars[$index] = $value;
+		}
+
+		public function __get($index) {											// Metodo per ritornare il valore di una variabile salvata
+			if(isset($this->vars[$index]))
+				return $this->vars[$index];
+			else
+				return '';
+		}
+		
+		protected function showView($view) {										// Metodo per il render della pagina
+			$path = _VIEW_PATH.$view.'View.php';
+			if (!file_exists($path)) 			                              	// Controllo esistenza della vista
+				$this->system->log->error("Vista non trovata! $view", __LINE__);
+			include($path);
+			$class = $view . 'View';
+			$obj = new $class($this->vars, $view);
+			$obj->show();
+		}
+		
+		protected function setView() {
+			$this->view = new Views($this->vars);
+		}
+		
+		protected function setTitle($title) {
+			$this->view->setTitlePage($title);
+		}
+		
+		protected function addTemplate($template, $index) {
+			if($this->view == null)
+				$this->system->log->error("Template non inserito in un'istanza della vista", __LINE__);
+			$this->view->insertTemplate($template, $index);
+		}
+		
+		protected function addTemplateFromFile($path, $index) {
+			if($this->view == null)
+				$this->system->log->error("Template non inserito in un'istanza della vista", __LINE__);
+			$this->view->insertTemplateFromFile($path, $index);
+		}
+		
+		protected function show() {
+			if($this->view == null)
+				$this->system->log->error("Nessuna vista definita", __LINE__);
+			$this->view->show();
+		}
+
+		protected function securePage($sid = null, $admin = 0) {										// Metodo per rendere un controller sicuro verificando il SID
+			$this->securePage = true;
+			if($sid == null)			
+				$sid = $this->args[_SID_GET_VAR];
+			if($this->system->sidValidate($this->args[_SID_GET_VAR], $admin)) 
+				return 1;
+			if(_SECURE_TEMPLATE != null) 										// Se viene specificato viene caricato un template di default
+				@include(_SECURE_TEMPLATE);
+			exit;													// Altrimenti blocco l'esecuzione
+		}
+		
+		abstract public function index();										// I controller saranno obbligati ad avere un metodo index
+	}
+?>
