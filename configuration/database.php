@@ -19,14 +19,14 @@
 	*/
 
 
-	include _SITE_PATH . '/configuration/' . 'struct_database.php';			        // Definizione dela struttura del database
+	include _SITE_PATH . '/configuration/' . 'struct_database.php';			        // Database Structure
 
-	DEFINE(	'_DB_HOST', 	"127.0.0.1");									// HOST
-	DEFINE(	'_DB_NAME', 	"poof");									// NOME DATABASE
-	DEFINE(	'_DB_USER', 	"root");									// USERNAME
-	DEFINE(	'_DB_PSWD', 	"root");									// PASSWORD
-	DEFINE(	'_DB_TYPE', 	"mysql");									// TIPO DATABASE
-	DEFINE(	'_DB_PREFIX', 	"");									// PREFISSO TABELLE
-	DEFINE(	'_DB_REFRESH_STRUCT', 1);									// ABILITAZIONE CREAZIONE STRUTTURA DATABASE
-	DEFINE(	'_DB_AUTO_CONN', true);										// ABILITAZIONE AUTOCONNESSIONE
+	DEFINE(	'_DB_HOST', 	"127.0.0.1");									// Database Host
+	DEFINE(	'_DB_NAME', 	"poof");										// Database name
+	DEFINE(	'_DB_USER', 	"root");										// Database username
+	DEFINE(	'_DB_PSWD', 	"root");										// Database password
+	DEFINE(	'_DB_TYPE', 	"mysql");										// Database type
+	DEFINE(	'_DB_PREFIX', 	"");											// Table prefix
+	DEFINE(	'_DB_REFRESH_STRUCT', 1);										// Enable refresh structure
+	DEFINE(	'_DB_AUTO_CONN', true);											// Enable autoconnect
 ?>

@@ -27,7 +27,7 @@
 		
 		public function connect($db_host = _DB_HOST, $db_username = _DB_USER, $db_password = _DB_PSWD, $db_name = _DB_NAME);
 		public function nonQuery($query);
-		public function query($query, $returnArray=false, $onlyQuery=false);
+		public function query($query, $returnArray=false);
 		public function write($table, $col, $value);
 		public function read($table, $col = array('*'), $where = "");
 		public function update($table, $value = array(), $where = "");

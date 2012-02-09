@@ -22,6 +22,19 @@
 	*****/	
 	
 	class language {
+		/*
+			VARS:
+				$system: system object
+				$language: selected language
+				$storage: traslated words
+			
+			METHOD:
+				__construct(): get the system object
+				__get(): get the word
+				setLang(): set the language
+				load(): load the dictionary
+		*/
+	
 		 private $system = null;
 		 public $language = null;
    		 private $storage = array();

@@ -22,6 +22,28 @@
 	*****/
 
 	abstract class Controllers {
+		/*
+			VARS:
+				$system: system object
+				$view: controller's view
+				$vars: (array) global var for the view
+				$args: (array) URL var
+				$securePage: flag for secure page (must be define a SID on the URL page)
+				
+			METHOD:
+				abstract index()
+			
+				__construct(): get the system object and the SID (if defined)
+				__set(): set var for the view
+				__get(): get var
+				showView() && show(): render the page
+				setView(): set a view for the controller
+				setTitle(): set page title
+				addTemplate(): if you don't use a view you can use a template. Add template
+				addTemplateFromFile(): add template from file
+				securePage(): validate SID.
+		*/
+	
 		protected $system = null;
 		protected $view = null;
 		protected $vars = array();
@@ -30,8 +52,8 @@
 		
 		function __construct($args=array()) {					
 			$this->system = system::getInstance();						
-			$this->args = $args;									// Carico in locale le variabili GET	
-			if(!isset($this->args[_SID_GET_VAR]))						// Se non definito imposto un SID nullo
+			$this->args = $args;									
+			if(!isset($this->args[_SID_GET_VAR]))						
 				$this->args[_SID_GET_VAR] = "";								
 		}
 
@@ -39,16 +61,16 @@
 			$this->vars[$index] = $value;
 		}
 
-		public function __get($index) {											// Metodo per ritornare il valore di una variabile salvata
+		public function __get($index) {											
 			if(isset($this->vars[$index]))
 				return $this->vars[$index];
 			else
 				return '';
 		}
 		
-		protected function showView($view) {										// Metodo per il render della pagina
+		protected function showView($view) {										
 			$path = _VIEW_PATH.$view.'View.php';
-			if (!file_exists($path)) 			                              	// Controllo esistenza della vista
+			if (!file_exists($path)) 			                              	
 				$this->system->log->error("Vista non trovata! $view", __LINE__);
 			include($path);
 			$class = $view . 'View';
@@ -82,17 +104,17 @@
 			$this->view->show();
 		}
 
-		protected function securePage($sid = null, $admin = 0) {										// Metodo per rendere un controller sicuro verificando il SID
+		protected function securePage($sid = null, $admin = 0) {										
 			$this->securePage = true;
 			if($sid == null)			
 				$sid = $this->args[_SID_GET_VAR];
 			if($this->system->sidValidate($this->args[_SID_GET_VAR], $admin)) 
 				return 1;
-			if(_SECURE_TEMPLATE != null) 										// Se viene specificato viene caricato un template di default
+			if(_SECURE_TEMPLATE != null) 										
 				@include(_SECURE_TEMPLATE);
-			exit;													// Altrimenti blocco l'esecuzione
+			exit;													
 		}
 		
-		abstract public function index();										// I controller saranno obbligati ad avere un metodo index
+		abstract public function index();								
 	}
 ?>

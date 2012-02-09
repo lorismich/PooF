@@ -23,29 +23,19 @@
 	
 
 
-	DEFINE('_MULTILANG_ENABLE', true);				// Abilitazione multilingua ( richiede _OB_START = true )
-	DEFINE('_MULTILANG_TABLE', 'multilang');			// Nome tabella nel database
-	DEFINE('_MULTILANG_GEOLOC', true);				// Geolocalizza l'utente per impostare la lingua esatta richiede _GEO_IP_ENABLE = true
+	DEFINE('_MULTILANG_ENABLE', true);				// Enable Multilang( require _OB_START = true )
+	DEFINE('_MULTILANG_TABLE', 'multilang');		// Database table name
+	DEFINE('_MULTILANG_GEOLOC', true);				// Localize the user for load the right languae ( require _GEO_IP_ENABLE = true )
 	
-	/* Definizioni lingue */
+	/* Language definitions */
 	$_language = array(
-		"Italiano" 	=> 	"IT",						// Italiano
-		"English" 	=> 	"US",						// Inglese
+		"Italiano" 	=> 	"IT",						// Italian
+		"English" 	=> 	"US",						// English
 	);
-	
-	/*if(_MULTILANG_ENABLE) {
-		$GLOBALS["_DB_STRUCT"][_MULTILANG_TABLE] =  array(
-							//	Nome campo			Tipo
-								'id'		=>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
-								'language'	 => 	'VARCHAR(5)',									// Memorizza la lingua
-								'text'	 	 =>	'TEXT',										// Testo da sostituire
-								'rewrite_to'	 => 	'TEXT',										// Memorizza la traduzione
-		);
-	}
-*/
-	$GLOBALS["_configTable"]['_NAME_COOKIE_MULTILANG'] = "MultiLang";		// Nome del cookie per riconoscere la lingua utilizzata
-	$GLOBALS["_configTable"]['_DEFAULT_LANG'] = "IT";				// Lingua di default
-	$GLOBALS["_configTable"]['_language'] = $_language;				// Lingue disponibili
+
+	$GLOBALS["_configTable"]['_NAME_COOKIE_MULTILANG'] = "MultiLang";		// Cookie name for the language
+	$GLOBALS["_configTable"]['_DEFAULT_LANG'] = "IT";						// Default language
+	$GLOBALS["_configTable"]['_language'] = $_language;						// Languages avaiable
 	
 
 ?>	

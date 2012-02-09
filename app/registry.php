@@ -22,6 +22,17 @@
 	*****/	
 	
 	class registry {
+		/*
+			VARS:
+				$vars: (array) registry vars
+				
+			METHOD:
+				__construct(): define the global vars
+				__set(): set var
+				__get(): get var
+				writeIntoDatabase(): write var into a database for permanent storage
+		*/
+	
 		private $vars = array();
 		
 		function __construct() {

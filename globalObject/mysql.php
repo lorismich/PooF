@@ -22,6 +22,29 @@
 	*****/
 
 	class mysql implements databaseDriver {
+		/*
+		VARS:
+			$conn: connection flag
+			$db: database connection
+			$system: system object
+			$lastResult: query last result
+			$affectedRows: query affectedRows
+			$debug: debug flag
+
+		METHOD:
+			__construct(): get system object and connect the database
+			__destruct(): close the database connection
+			connect(): connect the database and update the database structure
+			nonQuery(): execute a database query
+			query(): execute a database query and return an array or a object
+			write(): write into a table
+			read(): read a table
+			update(): update a table
+			numRows(): query number rows
+			fetch_assoc(): fetch assoc query
+			refreshDbStruct(): update the database structure. See configuration file
+		*/
+
 		public $conn = false;
 		public $db = null;
 		private $system = null;
@@ -32,7 +55,7 @@
 		function __construct() {
 			$this->system = system::getInstance();
 			if(_DB_AUTO_CONN)
-				$this->connect();																			// Classe di sistema
+				$this->connect();
 		}
 
 		function __destruct() {
@@ -41,13 +64,13 @@
 			$this->conn = false;
 		}
 
-		public function connect($db_host = _DB_HOST, $db_username = _DB_USER, $db_password = _DB_PSWD, $db_name = _DB_NAME) { 	// Funzione per la connessione al database	
+		public function connect($db_host = _DB_HOST, $db_username = _DB_USER, $db_password = _DB_PSWD, $db_name = _DB_NAME) {	
 			if(_ENABLE_DATABASE)
 				if(!$this->conn) {
-					if($this->db = mysql_connect($db_host, $db_username, $db_password) and mysql_select_db($db_name, $this->db)) {	// Mi connetto e seleziono il database
+					if($this->db = mysql_connect($db_host, $db_username, $db_password) and mysql_select_db($db_name, $this->db)) {
 						$this->conn = true;
 						if(_DB_REFRESH_STRUCT)
-							$this->refreshDbStruct();																				// Verifica struttura database
+							$this->refreshDbStruct();
 					}
 					else
 						$this->system->log->error("Driver mysql: Impossibile connettersi al database ".mysql_error() , __LINE__);
@@ -57,7 +80,7 @@
 		public function nonQuery($query) {
 			if(_ENABLE_DATABASE)
 				if($this->conn) {
-					$result = mysql_query($query, $this->db);																	// Eseguo la query
+					$result = mysql_query($query, $this->db);
 					if($result) {
 						if($this->debug)
 							echo '<div style="color: green">'. $query .'</div>';
@@ -71,10 +94,10 @@
 			}
 		}
 
-		public function query($query, $returnArray=false, $onlyQuery=false) {																		// Funzione per eseguire le query sul database
+		public function query($query, $returnArray=false, $onlyQuery=false) {
 			if(_ENABLE_DATABASE)
 				if($this->conn) {
-					$result = mysql_query($query, $this->db);																		// Eseguo la query
+					$result = mysql_query($query, $this->db);
 					if($onlyQuery) {
 						if($this->debug)
 							echo '<div style="color: green">'. $query .'</div>';
@@ -85,10 +108,10 @@
 							echo '<div style="color: red">'. $query .'</div>';
 						$this->system->log->error("Driver mysql: Query errata, errore: ".mysql_error() , __LINE__);
 					}
-					if($returnArray) {																								// Nel caso si preferisce un array invece che un oggetto
+					if($returnArray) {
 						$result = mysql_fetch_array($result, MYSQL_ASSOC);
-						$this->lastResult = $result;																				// Salvo il risultato	
-						$this->affectedRows = mysql_affected_rows();																// Salvo il numero di righe che hanno subito cambiamenti
+						$this->lastResult = $result;	
+						$this->affectedRows = mysql_affected_rows();
 						@mysql_free_result();
 						return $result;
 					}
@@ -155,9 +178,9 @@
 		}
 
 		public function numRows($query) {
-			if(_ENABLE_DATABASE)																							// Funzione per contare le righe di una query
+			if(_ENABLE_DATABASE)					
 				if($this->conn) {
-					$result = mysql_query($query, $this->db);																		// Eseguo la query
+					$result = mysql_query($query, $this->db);										
 					if(!$result)
 						$this->system->log->error("Driver mysql: Query errata, errore: ".mysql_error(), __LINE__);
 					$result = mysql_num_rows($result);
@@ -176,7 +199,7 @@
 			return mysql_fetch_assoc($result);
 		}
 
-		private function refreshDbStruct() {																// Funzione per creare la struttura di base del database
+		private function refreshDbStruct() {											
 			if(!_ENABLE_DATABASE)	return;
 			$res = $this->query("SHOW TABLES FROM "._DB_NAME, true, true);
 			$table = array();

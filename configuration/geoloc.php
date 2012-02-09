@@ -23,9 +23,9 @@
 
 	DEFINE('_GEO_IP_ENABLE', true);
 	DEFINE('_GEO_IP_TO_COUNTRY_TABLE', "geo_ip");
-	$GLOBALS["_configTable"]['_GEO_ENABLE'] = 0;		// Abilizazione geolocalizzazione
-	$GLOBALS["_configTable"]['_GEO_IP_REMOTE'] = 0; 	// Ricava ip da whatismyip.com ( utile per prove locali )
-	$GLOBALS["_configTable"]['_GEO_GLOB_NAME'] = "geoloc"; 	// Nome del globalobject della geolocalizzazione ( deve essere conforme a quanto specificato in config.php)
+	$GLOBALS["_configTable"]['_GEO_ENABLE'] = 0;			// Enable GeoLog
+	$GLOBALS["_configTable"]['_GEO_IP_REMOTE'] = 0; 		// Get IP from whatismyip.com ( for local test )
+	$GLOBALS["_configTable"]['_GEO_GLOB_NAME'] = "geoloc"; 	// Global Object Name ( the same of config.php )
 	
 	/* 	
 	#		Tabella per la traduzione da IP a COUNTRY CODE

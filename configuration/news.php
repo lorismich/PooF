@@ -21,23 +21,22 @@
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 
 *****/
-	DEFINE('_NEWS_ENABLE', true);								// Abilitazione news
-	DEFINE('_NEWS_TABLE', "news");								// Tabella per memorizzare le news
+	DEFINE('_NEWS_ENABLE', true);								// Enable news
+	DEFINE('_NEWS_TABLE', "news");								// Database table news
 	
 	if(_NEWS_ENABLE) {
 		$GLOBALS["_DB_STRUCT"][_NEWS_TABLE] =  array(
-							//	Nome campo			Tipo
-								'id'			 =>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
-								'author'		 => 	'VARCHAR(50)',									// Memorizza l'autore della news
-								'time'	 	 =>	'INT(10)',										// Timestamp dell'inserimento
-								'img'			 => 	'VARCHAR(255)',								// Memorizza l'immagine della news
-								'title' 		 => 	'VARCHAR(50)',									// Memorizza il titolo della news
-								'text' 		 => 	'TEXT',										// Memorizza il testo della news
+				'id'			 =>		'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+				'author'		 => 	'VARCHAR(50)',								// Author
+				'time'	 	 	 =>		'INT(10)',									// Timestamp
+				'img'			 => 	'VARCHAR(255)',								// News image
+				'title' 		 => 	'VARCHAR(50)',								// News title
+				'text' 		 	 => 	'TEXT',										// News text
 		);
 	}
 
-	$GLOBALS["_configTable"]['_NEWS_DEFAULT_AUTOR'] = "Administrator";		// Autore di default
-	$GLOBALS["_configTable"]['_NEWS_GETNUM'] = "5";				// Numero di news da scrivere
-	$GLOBALS["_configTable"]['_NEWS_MAXCHAR'] ="30";				// Numero massimo di caratteri per il testo in forma contratta 
+	$GLOBALS["_configTable"]['_NEWS_DEFAULT_AUTOR'] = "!D4ng3R!";		// Default author
+	$GLOBALS["_configTable"]['_NEWS_GETNUM'] = "5";						// Number of news to wirte
+	$GLOBALS["_configTable"]['_NEWS_MAXCHAR'] ="30";					// Max char for short news version
 	
 ?>

@@ -20,9 +20,10 @@
 		    You should have received a copy of the GNU General Public License
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 */
-
+	// Rewrite words
 	$_rewriteBase = array (
-		// String => rewriteString,
+	//	FROM		TO
+		"ROUTER" => "ciao",
 	);
 
 	$GLOBALS["_configTable"]['_rewriteBase'] = $_rewriteBase;		

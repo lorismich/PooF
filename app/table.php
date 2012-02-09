@@ -22,10 +22,25 @@
 	*****/
 
 	class table {
+		/*
+			Interface with the database driver
+		
+			VARS:
+				$system: system object
+				$nameTable: Name of the load table
+				
+			METHOD:
+				__construct(): get the system objec and set the table name
+				write(): write a record
+				read(): read a record
+				read_array(): read a record and return an array
+				onlyQuery(): execute a database query
+				fetch_assoc(): fetch the result
+				update(): update a record
+		*/
+	
 		private $system = null;
 		public $nameTable = null;
-		public $action = array();
-		public $row = array();
 
 		function __construct($nameTable) {
 			$this->system = system::getInstance();
@@ -74,9 +89,5 @@
 			if(count($col) != count($value))
 				$this->system->log->error("Database Table: Impossibile eseguire la scrittura, array non corrispondenti", __LINE__);
 			return $this->system->database->update($this->nameTable, $col, $value, $where);
-		}
-
-		public function loadRow($num) {
-
 		}
 	}

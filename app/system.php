@@ -21,7 +21,39 @@
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 	*****/	
 	
-	class system {																			// Classe Singleton	
+	class system {		
+		/*
+			VARS:
+				$instance: instance of system object ( Singleton Object )
+				$globalObject: (array) array of global object
+				$function: (array) array virtual object
+				$databaseTable: (array) database table load into system object ( See app/table.php )
+				$registry: system registry
+				$loadObject: Flag if the global object are loaded
+				$lang: site language
+				
+			METHOD:
+				__construct(): create the system registry
+				__get(): return a global object
+				getInstance(): return an instance of a system class
+				loadTable(): load a database table into the system
+				loadDatabase(): load the database
+				syncConfiguration(): syncronize the configuration in database
+				loadConfiguration(): load the configuration save in database
+				callEvent(): call a system event
+				loadGlobalObject(): load all global object
+				loadVirtualFunction(): load the functions save into database
+				loadLanguage(): load the right language dictionary.				// COMPLETE ME
+				setLanguage(): set a language
+				set%onRegistry: write into registry the % array
+				SafeArray(): check the array
+				ValidateEmail(): validate email
+				secure_link(): make a secure link. Link with the SID
+				sidValidate(): check if a sid is valid and if is an admin's SID
+				setCookie(): set a cookie
+				readCookie(): read a cookie
+		*/
+																		
 		private static $instance = null; 
 		private $globalObject = array();
 		public $function = array();
@@ -115,7 +147,7 @@
 				if(!$this->readCookie(_NAME_COOKIE_MULTILANG)) {
 					$glob = _GEO_GLOB_NAME;
 					$this->$glob->IpToCountry();
-					// da finire
+					// COMPLETE ME
 				}				
 			}
 		}

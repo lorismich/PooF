@@ -21,14 +21,14 @@
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 	*****/	
 
-	ob_start();							// Buffering output
-	$site_path = realpath(dirname(__FILE__));			// Definisco la posizione del sito
+	ob_start();											// Buffering output
+	$site_path = realpath(dirname(__FILE__));			// Site path
 	$site_path = str_replace("\\", "/", $site_path); 
 	
-	DEFINE('_SITE_PATH', $site_path);				// Definisco la costante che identifica la posizione /
-	include 'include/boot.php';					// Includo il file di boot
+	DEFINE('_SITE_PATH', $site_path);					
+	include 'include/boot.php';							// Bootloader
 		
-	$_system->registry->router = new router();			// Creo un nuovo router
-	$_system->registry->router->load();				// Interpreto la richiesta 
+	$_system->registry->router = new router();			// New router
+	$_system->registry->router->load();					// Load
 	
 ?>

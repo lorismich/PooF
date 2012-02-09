@@ -22,21 +22,20 @@
 *****/
 
 
-	DEFINE('_NEWSLETTER_ENABLE', true);					// Abilitazione newsletter
-	DEFINE('_NEWSLETTER_TABLE', "newsletter");				// Tabella per memorizzare gli iscritti
+	DEFINE('_NEWSLETTER_ENABLE', true);						// Enable Newsletter
+	DEFINE('_NEWSLETTER_TABLE', "newsletter");				// Table of newsletter user
 
 	if(_NEWSLETTER_ENABLE) {
 		$GLOBALS["_DB_STRUCT"][_NEWSLETTER_TABLE] =  array(
-							//	Nome campo		Tipo
-								'id'			 =>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
-								'name'	 	=> 	'TEXT',										
-								'surname'		 => 	'TEXT',										
-								'email'	 	 =>	'VARCHAR(255)',
+					'id'		=>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+					'name'	 	=> 	'TEXT',										
+					'surname'	=> 	'TEXT',										
+					'email'	 	=>	'VARCHAR(255)',
 		);
 	}
 
-	$GLOBALS["_configTable"]['_NEWSLETTER_AMIN_NAME'] = "Administrator";		// Nome dell'amministratore per invio email
-	$GLOBALS["_configTable"]['_NEWSLETTER_AMIN_EMAIL'] = "admin@domain.com";		// Indirizzo dell'amministratore per invio email
-	$GLOBALS["_configTable"]['_NEWSLETTER_X_MAILER'] = "domain.com";			// Dominio per header email
+	$GLOBALS["_configTable"]['_NEWSLETTER_AMIN_NAME'] = "Amministratore";		// Administrator name
+	$GLOBALS["_configTable"]['_NEWSLETTER_AMIN_EMAIL'] = "admin@hackgame.it";	// Email address
+	$GLOBALS["_configTable"]['_NEWSLETTER_X_MAILER'] = "hackgame.it";			// Domain
 		
 ?>

@@ -21,31 +21,30 @@
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 	*****/
 	
-	DEFINE('_PHOTO_ENABLE', true);							// Abilitazione photogallery
-	DEFINE('_PHOTO_DATABASE_TABLE', "photogallery");				// Tabella nel database per memorizzare le immagini 
-	DEFINE('_PHOTO_ALBUM_DATABASE_TABLE', "photogallery_album");			// Tabella nel database per memorizzare album
+	DEFINE('_PHOTO_ENABLE', true);									// Enable Photogallery 
+	DEFINE('_PHOTO_DATABASE_TABLE', "photogallery");				// Database table for the image
+	DEFINE('_PHOTO_ALBUM_DATABASE_TABLE', "photogallery_album");	// Database table for album
 
 	if(_PHOTO_ENABLE) {
 		$GLOBALS["_DB_STRUCT"][_PHOTO_DATABASE_TABLE] =  array(
-							//	Nome campo			Tipo
-								'id'			 =>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
-								'name_img'	 => 	'TEXT',										// Memorizza il nome dell'immagine
-								'url_img'		 => 	'TEXT',										// Memorizza l'url dell'immagine
-								'author'	 	 =>	'VARCHAR(255)',								// Memorizza l'autore
-								'time'		 => 	'INT(10)',										// Memorizza l'ora dell inserimento
-								'album'		 =>  'INT(10)',										// Memorizza l'album di appartenenza
+								'id'		 =>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'name_img'	 => 	'TEXT',										// Image name
+								'url_img'	 => 	'TEXT',										// Image URL
+								'author'	 =>	'VARCHAR(255)',									// Image author
+								'time'		 => 	'INT(10)',									// Image timestamp
+								'album'		 =>  'INT(10)',										// Album
 		);
 		$GLOBALS["_DB_STRUCT"][_PHOTO_ALBUM_DATABASE_TABLE] =  array(
-							//	Nome campo		Tipo
-								'id'			 =>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
-								'name'		 => 	'TEXT',										// Memorizza il nome dell'album
-								'url_image'	 =>  'TEXT',										// Memorizza la copertina dell'album
+				
+								'id'		=>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'name'		=> 	'TEXT',										// Memorizza il nome dell'album
+								'url_image'	=>  'TEXT',										// Memorizza la copertina dell'album
 		);
 	}
 
-	$GLOBALS["_configTable"]['_PHOTO_AUTHOR_DEFAULT'] = "Administrator";		// Autore di default per le immagini
-	$GLOBALS["_configTable"]['_PHOTO_ENABLE_UPLOAD'] = true;			// Abilitazione upload 
-	$GLOBALS["_configTable"]['_PHOTO_DIR_UPLOAD'] = 'include/image/upload/';	// Cartella per l'upload delle immagini
-	$GLOBALS["_configTable"]['_PHOTO_UPLOAD_FIELD'] = "file";			// Campo del form che identifica il file
-	$GLOBALS["_configTable"]['_PHOTO_UPLOAD_MAXSIZE'] = 2097152;			// Dimensione massima del file ( byte )
+	$GLOBALS["_configTable"]['_PHOTO_AUTHOR_DEFAULT'] = "Administrator";		// Deafult author for the image
+	$GLOBALS["_configTable"]['_PHOTO_ENABLE_UPLOAD'] = true;					// Enable uplad
+	$GLOBALS["_configTable"]['_PHOTO_DIR_UPLOAD'] = 'include/image/upload/';	// Uplad directory for image
+	$GLOBALS["_configTable"]['_PHOTO_UPLOAD_FIELD'] = "file";					// Form field for the file
+	$GLOBALS["_configTable"]['_PHOTO_UPLOAD_MAXSIZE'] = 2097152;				// Max size of the file ( byte )
 ?>

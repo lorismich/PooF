@@ -21,7 +21,7 @@
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 	*****/
 	
-	/*  Definizione della struttura del database */
+	/*  Database structure */
 	$_DB_STRUCT  = array(
 	
 	);	

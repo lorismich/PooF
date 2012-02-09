@@ -22,16 +22,33 @@
 	*****/	
 	
 	class Views {
+		/*
+			VARS:
+				$vars: (array) view var
+				$system: system object
+				$orderTemplate: (array) ordered array of template
+				$titlePage: Page title
+				
+			METHOD:
+				__construct(): (call event createViewEvent)  get the system object and load the base template
+				__destruct: load the base template and flush the output
+				insertTemplate(): insert template into the ordertTemplate array
+				insertTemplateFromFile(): insert template from file into the ordertTemplate array
+				setTitlePage(): set the page title
+				show(): render the page
+				outputBuffer(): check the buffer and rewrite special word ( See configuration file )
+		*/
+	
 		protected $vars = array();
 		protected $system = null;
-		public $orderTemplate = array();																			// Array con i template usati in ordine
+		public $orderTemplate = array();																			
 		private static $titlePage = "";
 		
 		function __construct($vars, $tpl = "") {
-			$this->system = system::getInstance();																	// Classe di sistema
+			$this->system = system::getInstance();																	
 			$this->system->callEvent("createViewEvent", array("time"=>round(microtime(true) - $this->system->registry->loadTime, 3)));
 			
-			if(is_array($vars)) {																					// Controllo che le variabili del controller siano in un array
+			if(is_array($vars)) {																					
 				$this->vars = $vars;
 			}	
 			else {
@@ -39,47 +56,47 @@
 			}	
 			
 			if($tpl != "") {
-				$this->orderTemplate[] = $tpl;																		// Imposto il template di base
+				$this->orderTemplate[] = $tpl;																		
 				self::$titlePage = ' - '.$tpl;	
 			}
 			
-			if(!ob_start("Views::outputBuffer"))																		// Abilitazione output buffer
+			if(!ob_start("Views::outputBuffer"))																		
 					$this->system->log->error("Ob_start fallito", __LINE__);		
 					
-			include (_BASE_TOP);																				// Base html
+			include (_BASE_TOP);																				
 			
-			if(!_OB_START) 	 																					// Se non è disattivato ob_start lo disattivo
+			if(!_OB_START) 	 																					
 				ob_end_flush();			
 		}
 		
 		function __destruct() {
-			include(_BASE_BOTTOM);																				// Base html
+			include(_BASE_BOTTOM);																				
 			ob_end_flush();
 		}
 				
-		public function insertTemplate($tpl, $pos) {																	// Metodo per la gestione dei template
-				$tpl = _TEMPLATE_PATH.$tpl.'.php';					   												// Cerco il template
-				if (!file_exists($tpl)) 																				// Controllo esistenza del template
-					$this->system->log->error("Template non trovato! $tpl", __LINE__);
+		public function insertTemplate($tpl, $pos) {																	
+				$tpl = _TEMPLATE_PATH.$tpl.'.php';					   												
+				if (!file_exists($tpl)) 																				
+				$this->system->log->error("Template non trovato! $tpl", __LINE__);
 				$first=array_slice($this->orderTemplate, 0, $pos); 
 				$second=array_slice($this->orderTemplate, $pos); 
 				$this->orderTemplate = array_merge($first,(array)$tpl, $second); 
 		}
 			
 		public function insertTemplateFromFile($path, $pos) {
-			if (!file_exists($path)) 																				// Controllo esistenza del template
+			if (!file_exists($path)) 																				
 					$this->system->log->error("Template non trovato! $tpl", __LINE__);
 			$first=array_slice($this->orderTemplate, 0, $pos); 
 			$second=array_slice($this->orderTemplate, $pos); 
 			$this->orderTemplate = array_merge($first,(array)$path, $second); 
 		}
 			
-		public function setTitlePage($title) {																			// Metodo per impostare il titolo della pagina 
+		public function setTitlePage($title) {																			
 			self::$titlePage = ' - '.$title;
 		}
 			
-		public function show() {																					// Metodo per fare il rendering della pagina	
-			foreach($this->vars as $key => $value)																	// Assegno le variabili
+		public function show() {																					
+			foreach($this->vars as $key => $value)																	
 				$$key = $value;		
 			if(count($this->orderTemplate) == 0)
 				$this->system->log->error("Vista senza template!", __LINE__);
@@ -88,28 +105,14 @@
 				if($valueTpl == null)
 					$this->system->log->error("Template non definito!", __LINE__);
 				$this->system->callEvent("showEvent", array());		
-				include( $valueTpl);																					// Includo il template
+				include( $valueTpl);																					
 			}
 		}
 		
-		public static function img($id, $img, $echo = true, $mouseOver = "", $mouseOut = "") {
-			if(!is_file(_IMG_PATH.$img))
-				return;
-			if($echo)
-				echo '<img id="'.$id.'" src="'._IMG_PATH.$img.'" onmouseover="'.$mouseOver.'" onmouseout="'.$mouseOut.'">';
-			else
-				return '<img id="'.$id.'" src="'._IMG_PATH.$img.'" onmouseover="'.$mouseOver.'" onmouseout="'.$mouseOut.'">';
-		}
-		
-		public static function a($href = "", $label = "", $mouseOver = "", $mouseOut = "") {
-			if($href != "" and $label != "")
-				echo '<a href="'.$href.'" onmouseover="'.$mouseOver.'" onmouseout="'.$mouseOut.'">'.$label.'</a>';
-		}
-		
-		public static function outputBuffer($buffer) {															// Funzione per il controllo del buffer
+		public static function outputBuffer($buffer) {															
 			$title_page =  str_replace('_',  ' ', _SITE_NAME.' '.ucfirst(self::$titlePage));
-			$buffer = str_replace('$_TPage', $title_page , $buffer);												// Imposto il titolo della pagina	
-			if(_REWRITE_OUTPUT) {																		// Sostiuisco le parole speciali in rewrite_base.php
+			$buffer = str_replace('$_TPage', $title_page , $buffer);													
+			if(_REWRITE_OUTPUT) {																		
 				foreach($GLOBALS["_rewriteBase"] as $key => $value)
 					$buffer = str_replace($key, $value, $buffer);
 			}			

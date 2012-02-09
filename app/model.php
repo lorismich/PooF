@@ -21,6 +21,14 @@
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 	*****/	
 	abstract class Models {
+		/*
+			VARS:
+				$system: system object
+				
+			METHOD:
+				__construct(): get the system object
+		*/
+	
 		protected $system;
 		function __construct() {	
 			$this->system = system::getInstance();

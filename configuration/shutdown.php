@@ -1,7 +1,6 @@
 <?php
 /****
 		*	File: shutdown.php
-		*	Descrizione: File di configurazione della funzione shutodown
 		*
 		*	Author: D4ng3R <mich.loris@gmail.com>
 
@@ -23,7 +22,7 @@
 
 /*+++++++++++++++++++++++++++++++++++
 
-	Funzione richiamata al termine di tutto lo script
+	Function call when the framework stop
 	
 +++++++++++++++++++++++++++++++++++*/	
 	function _shutdown() {

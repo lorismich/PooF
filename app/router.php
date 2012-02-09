@@ -21,22 +21,37 @@
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 	*****/	
 	class router {
-		private $args = array();					// Argomenti da passare al controller     
-		private $path = _CONTROLLER_PATH;			// Cartella di default per i controller
+		/*
+			VARS:
+				$args: (array) URL var
+				$path: controller's path
+				$system: system object
+				$file: controller file
+				$controller: controller name
+				$action: controller method
+				
+			METHOD:
+				__construct(): get the system object and check the controller's path
+				load(): (event getControllerEvent) load the controller and call the method
+				getController(): search the controller and manage the deviation.
+		*/
+	
+		private $args = array();					 
+		private $path = _CONTROLLER_PATH;			
 		private $system;
-		public  $file = null;						// Indirizzo controller
-		public  $controller = null;					// Nome controller	
-		public  $action = null;						// Metodo del controller da chiamare
+		public  $file = null;						
+		public  $controller = null;					
+		public  $action = null;						
 		
 		function __construct() {
-			$this->system = system::getInstance(); 	// Carico la classe di sistema
+			$this->system = system::getInstance(); 	
 		}
 		
-		public function changePath($path) {														// Metodo per cambiare la directory di default per i controller
-			if (is_dir($path) == false) {														// Controllo che la directory sia valida
+		public function changePath($path) {														
+			if (is_dir($path) == false) {														
 				$this->system->log->error("Router: Indirizzo controller non valido: ` $path `", __LINE__);
 			}
-			$this->path = $path;																// Imposto il nuovo indirizzo
+			$this->path = $path;																
 		}
 		
 		public function load() {
@@ -55,23 +70,24 @@
 			}	
 			else
 				$action = $this->action;
-			$this->system->callEvent("getControllerEvent", array("page" => $this->controller));		// Richiamo l'evento associato all'identifiazione del controlelr
-			$controller->$action();																	// Eseguo il metodo del controller
+			$this->system->callEvent("getControllerEvent", array("page" => $this->controller));		
+			$controller->$action();																	
 		}
 		
 		private function getController()	{
-			$route = (!isset($_GET[_GET_PAGE_NAME])) ? '' : $_GET[_GET_PAGE_NAME];				// Recupero il controller richiesto 
-			$this->action = 'index';									// Imposto il metodo di default da richiamare
-			if (empty($route))										// Se non è specificato nessun controller carico quello di default
+			$route = (!isset($_GET[_GET_PAGE_NAME])) ? '' : $_GET[_GET_PAGE_NAME];				
+			$this->action = 'index';									
+			if (empty($route))										
 				$this->controller = _DEFAULT_CONTROLLER;	
 			else
 			{
-				$parts = explode('/', $route);										// Determino il nome del controller e il metodo da attivare
+				// Get the URL controller, URL action and URL args
+				$parts = explode('/', $route);										
 				$this->controller = $parts[0];				
 				if(isset($parts[1])) {
 					$this->action = $parts[1];
 				}				
-				for($i=2; $i<count($parts); $i++) {									// Recupero eventuali parametri GET
+				for($i=2; $i<count($parts); $i++) {									
 					$var = explode('=', $parts[$i]);
 					$key = $var[0];
 					if(isset($var[1])) 
@@ -82,17 +98,19 @@
 				}				
 			}
 			
+			// If IP Ban
 			if(in_array($_SERVER['REMOTE_ADDR'], $GLOBALS["_configTable"]["_router_bans_ip"])) {
 				$this->changePath(_CONTROLLER_PATH_ROUTER);
 				$this->file = $this->path._CONTROLLER_BAN.'.php';
 				$this->controller = _CONTROLLER_BAN;	
 				return;
 			}
-					
+			
+			// Manage the deviation		
 			if($this->controller == _ADMIN_DEVIATION_NAME) {
-				$this->file = _ADMIN_DEVIATION_FILE;							// Determino la posizione del controller amministrativo
+				$this->file = _ADMIN_DEVIATION_FILE;							
 			}
-			else {																// Determino la posizione del controller
+			else {																
 				if(array_key_exists($this->controller, $GLOBALS["_configTable"]["_router_deviation"])) {
 					$array = $GLOBALS["_configTable"]["_router_deviation"];
 					if(_ROUTER_DEVIATON_ENABLE)

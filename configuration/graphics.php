@@ -21,22 +21,20 @@
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 	*****/	
 
-									
-	/* Definizioni colori di base */
 	$_colors = array(
-					"white" 	=> 	array("255", "255", "255"),			// Colore bianco
-					"black" 	=> 	array("0", "0", "0"),				// Colore nero
-					"blue" 		=> 	array("0", "0", "255"),				// Colore blu
-					"green" 	=>	array("0", "255", "0"),				// Colore verde
-					"red" 		=> 	array("255", "0", "0"),				// Colore rosso
-					"grey" 		=> 	array("190", "190", "190"),			// Colore grigio
-					"line"		=>	array("120", "120", "120"),			// Colore grigla grafico
-					"txt"		=>	array("255", "0", "0"),				// Colore testo grafico
-					"point"		=>	array("0", "0", "255"),				// Colore punti grafico
+					"white" 	=> 	array("255", "255", "255"),			// White
+					"black" 	=> 	array("0", "0", "0"),				// Black
+					"blue" 		=> 	array("0", "0", "255"),				// Blue
+					"green" 	=>	array("0", "255", "0"),				// Green
+					"red" 		=> 	array("255", "0", "0"),				// Red
+					"grey" 		=> 	array("190", "190", "190"),			// Grey
+					"line"		=>	array("120", "120", "120"),			// Grid color on grapihcs
+					"txt"		=>	array("255", "0", "0"),				// Text color on grapihcs
+					"point"		=>	array("0", "0", "255"),				// Point color on grapihcs
 					);
 
-	$GLOBALS["_configTable"]['_MIME_TYPE'] = "Content-type: image/png";		// Definizione tipo MIME per l'immagine
-	$GLOBALS["_configTable"]['_TYPE_IMG'] = "png";				// Tipo di immagine (jpg o png) coerente con il tipo MIME
+	$GLOBALS["_configTable"]['_MIME_TYPE'] = "Content-type: image/png";		// Image MIME type
+	$GLOBALS["_configTable"]['_TYPE_IMG'] = "png";							// Image type (png or jpg)
 	
 	
 ?>

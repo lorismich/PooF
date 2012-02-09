@@ -21,10 +21,10 @@
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 *****/
 
-	$GLOBALS["_configTable"]['_XML_VERSION'] = "1.0";				// Versione per xml
-	$GLOBALS["_configTable"]['_XML_HTML'] = true;				// Codifica caratteri html
-	$GLOBALS["_configTable"]['_XML_ENCODING'] = true;				// Codifica per xml
-	$GLOBALS["_configTable"]['_XML_WRITE'] = true;				// Valore di default per indicare se l'output deve essere scritto nella pagina
-	$GLOBALS["_configTable"]['_XML_EXIT'] = true;				// Valore di default per indicare se dopo la scrittura di deve interrompere l'esecuzione dello script
+	$GLOBALS["_configTable"]['_XML_VERSION'] = "1.0";			// XML version
+	$GLOBALS["_configTable"]['_XML_HTML'] = true;				// HTML character
+	$GLOBALS["_configTable"]['_XML_ENCODING'] = true;			// XML encoding
+	$GLOBALS["_configTable"]['_XML_WRITE'] = true;				// Output print on page?
+	$GLOBALS["_configTable"]['_XML_EXIT'] = true;				// Exit when print?
 	
 ?>
