@@ -17,7 +17,6 @@ ADD
 	* Mysql Driver comments
 	* Configurations comments
 	* Log comment
-	* English translate
 	
 FIX
 	* Fix fopen error in Log when no permission.
