@@ -2,7 +2,8 @@
 		VERSIONE 1.1
 -------------------------------
 TODO:
-	* Memcache Mysql driver
+	* Add Memcache Mysql driver
+	* Add Upgrading system
 
 ADD
 	
