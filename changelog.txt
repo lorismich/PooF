@@ -1,11 +1,12 @@
 -------------------------------
-		VERSIONE 1.1
+	VERSIONE 1.1
 -------------------------------
 TODO:
+
 	* Add Memcache Mysql driver
 	* Add Upgrading system
 
-ADD
+ADD:
 	
 	* App Controller comments
 	* App Models comments
@@ -20,8 +21,8 @@ ADD
 	* Log comment
 	* English translate
 	
-FIX
+FIX:
 	* Fix fopen error in Log when no permission.
 	
-REMOVE
+REMOVE:
 	* OnlyQuery arg in query function ( MysqlDriver)
