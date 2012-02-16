@@ -43,7 +43,7 @@
 			$this->system = system::getInstance(); 										
 			if(file_exists(_LOG_FILE) and filesize(_LOG_FILE) > _LOG_MAXSIZE_FILE)		
 				@unlink(_LOG_FILE);														
-			$this->file = fopen(_LOG_FILE, "a+");										
+			$this->file = @fopen(_LOG_FILE, "a+");										
 		}	
 		
 		function __destruct() {
@@ -52,7 +52,7 @@
 		
 		public function warning($txt, $line) {				
 			$txt = "WARNING: $txt at line $line \r\n";
-			fwrite($this->file, $txt);
+			@fwrite($this->file, $txt);
 			if($this->system->loadobject)
 				$this->system->callEvent("warningEvent");		
 		}
@@ -67,7 +67,7 @@
 		
 		private function CloseAndExit($text)
 		{
-			fclose($this->file);
+			@fclose($this->file);
 			echo '<font color="red">'.$text.'</font><br> Contact the administrator';
 			exit;
 		}
