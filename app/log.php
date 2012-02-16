@@ -1,4 +1,4 @@
-<?php
+<?php 
 	/****
 		*	File: log.php
 		*	Descrizione: Gestore dei log
