@@ -1,0 +1,9 @@
+# OS FILES #
+.DS_Store
+
+# TEMP FILES #
+*~
+*.swp
+
+# LOG FILES #
+log/*
