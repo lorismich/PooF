@@ -1,12 +1,11 @@
 -------------------------------
-		VERSIONE 1.1
+		VERSION 1.1
 -------------------------------
 TODO:
 	* Add Memcache Mysql driver
 	* Add Upgrading system
 
 ADD
-	
 	* App Controller comments
 	* App Models comments
 	* App Registry comments
