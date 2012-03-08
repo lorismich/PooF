@@ -4,7 +4,7 @@ Author: Loris 'D4ng3R' Mich
 
 Email: <<loris@lorismich.it>>
 
-Website: www.lorismich.ir
+Website: www.lorismich.it
 
 ### Requirements ###
 - Apache
