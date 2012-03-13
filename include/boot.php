@@ -23,6 +23,7 @@
 	register_shutdown_function('_shutdown');							// Shutdown function
 	
 	$_system = system::getInstance(); 									// New system object (Singleton)	
+	$_system->loadDriver();												// Load database dirver
 	$_system->loadDatabase();											// Load database
 	$_system->loadConfiguration();										// Load configuration
 	$_system->registry->loadTime = microtime(true);				    	// Analyze load time
