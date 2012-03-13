@@ -26,6 +26,7 @@
 	DEFINE('_VIEW_PATH' ,  _SITE_PATH . '/view/');								// View default path
 	DEFINE('_MODELS_PATH',  _SITE_PATH . '/models/');							// Model default path
 	DEFINE('_GLOBAL_OBJECT_PATH' ,  _SITE_PATH . '/globalObject/');				// GlobalObject default path
+	DEFINE('_DRIVER_PATH' ,  _SITE_PATH . '/driver/');							// Driver default path
 
 	/**** 
 		*
