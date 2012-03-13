@@ -88,6 +88,15 @@
 				$this->globalObject["database"] = new $type();
 			}
 		}
+		
+		public function loadDriver() {
+			$driverDirectory = $dh = opendir(_DRIVER_PATH);
+			while (($file = readdir($dh)) !== false) {
+				if($file != "." && $file != "..")
+					include(_DRIVER_PATH.$file);
+			}
+			closedir($driverDirectory);
+		}
 
 		public function syncConfiguration() {
 			foreach($GLOBALS["_configTable"] as $key=>$value) {
