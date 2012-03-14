@@ -25,8 +25,13 @@
 	DEFINE(	'_DB_NAME', 	"poof");										// Database name
 	DEFINE(	'_DB_USER', 	"root");										// Database username
 	DEFINE(	'_DB_PSWD', 	"root");										// Database password
-	DEFINE(	'_DB_TYPE', 	"mysql");										// Database type
+	DEFINE(	'_DB_TYPE', 	"sqlite");										// Database type
 	DEFINE(	'_DB_PREFIX', 	"");											// Table prefix
 	DEFINE(	'_DB_REFRESH_STRUCT', 1);										// Enable refresh structure
 	DEFINE(	'_DB_AUTO_CONN', true);											// Enable autoconnect
+	
+	// Sqlite
+	DEFINE(	'_DB_FILE', "database");										// Sqlite database file
+	DEFINE( '_DB_PATH', _SITE_PATH . "/include/database/");					// Sqlite database directory
+	
 ?>

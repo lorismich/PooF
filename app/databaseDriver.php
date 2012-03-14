@@ -25,7 +25,7 @@
 		function __construct();
 		function __destruct();		
 		
-		public function connect($db_host = _DB_HOST, $db_username = _DB_USER, $db_password = _DB_PSWD, $db_name = _DB_NAME);
+		public function connect();
 		public function nonQuery($query);
 		public function query($query, $returnArray=false);
 		public function write($table, $col, $value);

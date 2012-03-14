@@ -7,3 +7,6 @@
 
 # LOG FILES #
 log/*
+
+# DATABASE FILE #
+include/database/*

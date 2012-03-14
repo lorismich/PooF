@@ -112,10 +112,10 @@
 	
 	if(_VIRTUAL_FUNCTION_ENABLE) {
 		$GLOBALS["_DB_STRUCT"][_VIRTUAL_FUNCTION_DB_TABLE] =  array(
-				'id'		 =>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
-				'name'	 	 => 	'VARCHAR(255)',							 	// Name of the function		
-				'args'		 => 	'VARCHAR(255)',								// Args of the function	
-				'code'	 	 =>	'TEXT',											// Code of the function
+				'id'		 =>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
+				'name'	 	 => 'VARCHAR(255)',							 	// Name of the function		
+				'args'		 => 'VARCHAR(255)',								// Args of the function	
+				'code'	 	 =>	'TEXT',										// Code of the function
 		);
 	}
 
@@ -130,7 +130,7 @@
 	//	Dynamic Configuration
 	DEFINE('_DYNAMIC_CONFIGURATION_TABLE', 'config');					// Configuration table
 	$GLOBALS["_DB_STRUCT"][_DYNAMIC_CONFIGURATION_TABLE] =  array(
-				'conf_name'	=>	'VARCHAR(50) NOT NULL PRIMARY KEY',		
+				'conf_name'		=>	'VARCHAR(50) NOT NULL PRIMARY KEY',		
 				'conf_value'	=> 	'TEXT',				 				
 	);
 
@@ -139,7 +139,7 @@
 	// Database Registry
 	DEFINE('_REGISTRY_DATABASE_TABLE', 'registry');
 	$GLOBALS["_DB_STRUCT"][_REGISTRY_DATABASE_TABLE] =  array(
-				'conf_name'	=>	'VARCHAR(50) NOT NULL PRIMARY KEY',		
+				'conf_name'		=>	'VARCHAR(50) NOT NULL PRIMARY KEY',		
 				'conf_value'	=> 	'TEXT',				 						
 	);
 ?>

@@ -109,17 +109,18 @@
 			if(_ENABLE_DATABASE) {
 				foreach($GLOBALS["_configTable"] as $key=>$value) {
 					if($this->globalObject["database"]->numRows("SELECT * FROM "._DYNAMIC_CONFIGURATION_TABLE ." WHERE conf_name='".$key."'") == 0) {
-						if(!$this->globalObject["database"]->query("INSERT INTO "._DYNAMIC_CONFIGURATION_TABLE." (conf_name, conf_value) VALUES ('$key', '".serialize($value)."');", true ,true))
-							$this->globalObject["log"]->error("System: impossibile caricare la configurazione", __LINE__);	
+						if(!$this->globalObject["database"]->query("INSERT INTO "._DYNAMIC_CONFIGURATION_TABLE." (conf_name, conf_value) VALUES ('$key', '".serialize($value)."');", true ,true)) {
+							$this->globalObject["log"]->warning("System: impossibile caricare la configurazione", __LINE__);	
+						}
 					}	
 				}
 
-				$query = $this->database->query("SELECT * FROM "._DYNAMIC_CONFIGURATION_TABLE, true, true);
+				$query = $this->database->nonQuery("SELECT * FROM "._DYNAMIC_CONFIGURATION_TABLE);
 				while($config = $this->globalObject["database"]->fetch_assoc($query)) {
-					
 						$GLOBALS["_configTable"][$config["conf_name"]] = unserialize($config["conf_value"]);
-						if(!is_array(unserialize($config["conf_value"])))
+						if(!is_array(unserialize($config["conf_value"]))) {
 							DEFINE($config["conf_name"],  unserialize($config["conf_value"]));
+						}
 				}	
 			} 
 		}
@@ -156,7 +157,7 @@
 				if(!$this->readCookie(_NAME_COOKIE_MULTILANG)) {
 					$glob = _GEO_GLOB_NAME;
 					$this->$glob->IpToCountry();
-					// COMPLETE ME
+					// TODO
 				}				
 			}
 		}
