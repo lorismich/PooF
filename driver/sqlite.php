@@ -67,6 +67,10 @@
 		public function connect($db_file = _DB_FILE) {	
 			if(_ENABLE_DATABASE)
 				if(!$this->conn) {
+					if(!is_dir(_DB_PATH)) {
+						mkdir(_DB_PATH);
+					}
+				
 					if($this->db = new SQLite3(_DB_PATH . $db_file)) {
 						$this->conn = true;
 					
