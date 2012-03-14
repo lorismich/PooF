@@ -27,7 +27,7 @@
 
 	if(_NEWSLETTER_ENABLE) {
 		$GLOBALS["_DB_STRUCT"][_NEWSLETTER_TABLE] =  array(
-					'id'		=>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+					'id'		=>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 					'name'	 	=> 	'TEXT',										
 					'surname'	=> 	'TEXT',										
 					'email'	 	=>	'VARCHAR(255)',

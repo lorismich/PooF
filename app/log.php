@@ -59,7 +59,7 @@
 		
 		public function error($txt, $line) {				
 			$txt = "ERROR!!: $txt at line $line !!\r\n";
-			fwrite($this->file, $txt);
+			@fwrite($this->file, $txt);
 			if($this->system->loadobject)
 				$this->system->callEvent("errorEvent");			
 			$this->CloseAndExit($txt);

@@ -35,18 +35,18 @@
 
 	if(_USERS_ENABLE) {
 		$GLOBALS["_DB_STRUCT"][_LOG_LOGIN_TABLE] =  array(
-									'id'		 => 	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+									'id'		 => 	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 									'name'		 => 	'VARCHAR(50)',
 									'admin'		 => 	'TINYINT(1)'											
 		);
 
 		$GLOBALS["_DB_STRUCT"][_DB_TABLE_GROUPS] =  array(								
-								'id'			 => 	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'			 => 'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'name'		 => 	'VARCHAR(50)',
 								'admin'		 => 	'TINYINT(1)'												
 		);
 		$GLOBALS["_DB_STRUCT"][_DB_TABLE_USERS] =  array(
-								'id'			 => 	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'			 => 	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'username'	 => 	'VARCHAR(200)',
 								'sid'			 =>	'VARCHAR(50)',										
 								'group'		 => 	'VARCHAR(10)',

@@ -6,6 +6,7 @@ TODO:
 	* Add Upgrading system
 
 ADD
+	* Add Sqlite database driver
 	* App Controller comments
 	* App Models comments
 	* App Registry comments

@@ -27,7 +27,7 @@
 
 	if(_PHOTO_ENABLE) {
 		$GLOBALS["_DB_STRUCT"][_PHOTO_DATABASE_TABLE] =  array(
-								'id'		 =>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'		 =>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'name_img'	 => 	'TEXT',										// Image name
 								'url_img'	 => 	'TEXT',										// Image URL
 								'author'	 =>	'VARCHAR(255)',									// Image author
@@ -36,7 +36,7 @@
 		);
 		$GLOBALS["_DB_STRUCT"][_PHOTO_ALBUM_DATABASE_TABLE] =  array(
 				
-								'id'		=>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'		=>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'name'		=> 	'TEXT',										// Memorizza il nome dell'album
 								'url_image'	=>  'TEXT',										// Memorizza la copertina dell'album
 		);

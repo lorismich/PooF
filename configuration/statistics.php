@@ -21,7 +21,7 @@
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 	*****/	
 	
-	DEFINE('_STATISTICS_ENABLE', true);								// Enable statiscts
+	DEFINE('_STATISTICS_ENABLE', false);								// Enable statiscts
 	DEFINE('_STATISTICS_LOGIN_TABLE', 'stats_login');				// Database table for login data
 	DEFINE('_STATISTICS_PAGE_TABLE', 'stats_page');					// Database table for controller data
 	DEFINE('_STATISTICS_ERROR_TABLE', 'stats_error');				// Database table for error & wariong data
@@ -48,46 +48,46 @@
 
 	if(_STATISTICS_ENABLE) {
 		$GLOBALS["_DB_STRUCT"][_STATISTICS_LOGIN_TABLE] =  array(
-								'id'		 	 =>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'		 	 =>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'day'			 => 	'INT(10)',										
 								'number_login'	 => 	'INT(10)',									
 		);
 		
 		$GLOBALS["_DB_STRUCT"][_STATISTICS_PAGE_TABLE] =  array(
-								'id'			=>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'			=>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'controller'	=> 	'VARCHAR(50)',									
 								'number_visit' 	=> 	'INT(10)',									
 		);
 		$GLOBALS["_DB_STRUCT"][_STATISTICS_BROWSER_TABLE] =  array(
-								'id'			=>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'			=>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'browser'	 	=> 	'VARCHAR(50)',									
 								'number' 		=> 	'INT(10)',									
 		);
 		$GLOBALS["_DB_STRUCT"][_STATISTICS_TIMEVIST_TABLE] =  array(
-								'id'			=>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'			=>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'day'			=> 	'INT(10)',										
 								'time_visit' 	=> 	'FLOAT(10)',									
 		);
 		$GLOBALS["_DB_STRUCT"][_STATISTICS_TIMEVISTTMP_TABLE] =  array(
 	
-								'id'			=>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'			=>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'day'			=> 	'INT(10)',										
 								'hour'		 	=> 	'INT(10)',										
 								'time_visit' 	=> 	'FLOAT(10)',									
 		);
 		$GLOBALS["_DB_STRUCT"][_STATISTICS_LOADPAGE_TABLE] =  array(
-								'id'			=>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'			=>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'day'		 	=> 	'double',										
 								'time'		 	=> 	'FLOAT(10)',									
 		);
 		$GLOBALS["_DB_STRUCT"][_STATISTICS_LOADPAGETMP_TABLE] =  array(
-								'id'			 =>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'			 =>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'day'			 => 	'double',										
 								'hour'		 => 	'INT(10)',									
 								'time'		 => 	'FLOAT(10)',									
 		);
 		$GLOBALS["_DB_STRUCT"][_STATISTICS_ERROR_TABLE] =  array(
-								'id'		 	=>	'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+								'id'		 	=>	'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 								'type'		=> 	'VARCHAR(50)',
 								'number'	 	=> 	'INT(10)',
 		);

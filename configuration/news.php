@@ -26,7 +26,7 @@
 	
 	if(_NEWS_ENABLE) {
 		$GLOBALS["_DB_STRUCT"][_NEWS_TABLE] =  array(
-				'id'			 =>		'INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY',
+				'id'			 =>		'INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY',
 				'author'		 => 	'VARCHAR(50)',								// Author
 				'time'	 	 	 =>		'INT(10)',									// Timestamp
 				'img'			 => 	'VARCHAR(255)',								// News image

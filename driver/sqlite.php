@@ -1,7 +1,7 @@
 <?php
 	/****
-		*	File: mysql.php
-		*	Descrizione: Driver per database MySql
+		*	File: sqlite.php
+		*	Descrizione: Driver per database Sqlite
 		*
 		*	Author: D4ng3R <mich.loris@gmail.com>
 
@@ -21,7 +21,7 @@
 		    along with :PooF.  If not, see <http://www.gnu.org/licenses/>.
 	*****/
 
-	class mysql implements databaseDriver {
+	class sqlite implements databaseDriver {
 		/*
 		VARS:
 			$conn: connection flag
@@ -60,27 +60,28 @@
 
 		function __destruct() {
 			if($this->conn)
-				@mysql_close($this->db);
+				@$this->db->close();
 			$this->conn = false;
 		}
 
-		public function connect($db_host = _DB_HOST, $db_username = _DB_USER, $db_password = _DB_PSWD, $db_name = _DB_NAME) {	
+		public function connect($db_file = _DB_FILE) {	
 			if(_ENABLE_DATABASE)
 				if(!$this->conn) {
-					if($this->db = mysql_connect($db_host, $db_username, $db_password) and mysql_select_db($db_name, $this->db)) {
+					if($this->db = new SQLite3(_DB_PATH . $db_file)) {
 						$this->conn = true;
+					
 						if(_DB_REFRESH_STRUCT)
 							$this->refreshDbStruct();
 					}
 					else
-						$this->system->log->error("Driver mysql: Impossibile connettersi al database ".mysql_error() , __LINE__);
+						$this->system->log->error("Driver sqlite: Impossibile connettersi al database ", __LINE__);
 				}
 		}
 
 		public function nonQuery($query) {
 			if(_ENABLE_DATABASE)
 				if($this->conn) {
-					$result = mysql_query($query, $this->db);
+					$result =  $this->db->query($query);
 					if($result) {
 						if($this->debug)
 							echo '<div style="color: green">'. $query .'</div>';
@@ -89,7 +90,7 @@
 					else {
 						if($this->debug)
 							echo '<div style="color: red">'. $query .'</div>';
-						$this->system->log->error("Driver mysql: Query errata, errore: ".mysql_error() , __LINE__);
+						$this->system->log->error("Driver sqlite: Query errata", __LINE__);
 					}
 			}
 		}
@@ -97,7 +98,8 @@
 		public function query($query, $returnArray=false, $onlyQuery=false) {
 			if(_ENABLE_DATABASE)
 				if($this->conn) {
-					$result = mysql_query($query, $this->db);
+					$result = $this->db->query($query);
+					
 					if($onlyQuery) {
 						if($this->debug)
 							echo '<div style="color: green">'. $query .'</div>';
@@ -106,27 +108,55 @@
 					if(!$result) {
 						if($this->debug)
 							echo '<div style="color: red">'. $query .'</div>';
-						$this->system->log->error("Driver mysql: Query errata, errore: ".mysql_error() , __LINE__);
+						$this->system->log->error("Driver sqlite: Query errata, errore", __LINE__);
 					}
 					if($returnArray) {
-						$result = mysql_fetch_array($result, MYSQL_ASSOC);
+						$result->fetch_array($result);
 						$this->lastResult = $result;	
-						$this->affectedRows = mysql_affected_rows();
-						@mysql_free_result();
+						$this->affectedRows = $this->db->changes();
 						return $result;
 					}
-					$result = mysql_fetch_object($result);
+					$result = $this->fetchObject($result);
 					$this->lastResult = $result;
-					$this->affectedRows = mysql_affected_rows();
-					@mysql_free_result();
-					return $result;				}
+					$this->affectedRows = $this->db->changes();
+					return $result;				
+				}
 				else
-					$this->system->log->error("Driver mysql: Impossibile eseguire la query, connessione non avvenuta", __LINE__);
+					$this->system->log->error("Driver sqlite: Impossibile eseguire la query, connessione non avvenuta", __LINE__);
+		}
+		
+		// http://au2.php.net/manual/en/class.sqlite3result.php#101589 Thanks ;)
+		function fetchObject($sqlite3result, $objectType = NULL) {
+			$array = $sqlite3result->fetchArray();
+
+			if(is_null($objectType)) {
+				$object = new stdClass();
+			} else {
+				// does not call this class' constructor
+				$object = unserialize(sprintf('O:%d:"%s":0:{}', strlen($objectType), $objectType));
+			}
+		   
+			$reflector = new ReflectionObject($object);
+			for($i = 0; $i < $sqlite3result->numColumns(); $i++) {
+				$name = $sqlite3result->columnName($i);
+				$value = $array[$name];
+			   
+				try {
+				    $attribute = $reflector->getProperty($name);
+				   
+				    $attribute->setAccessible(TRUE);
+				    $attribute->setValue($object, $value);
+				} catch (ReflectionException $e) {
+				    $object->$name = $value;
+				}
+			}
+		   
+			return $object;
 		}
 
 		public function write($table, $col, $value) {
 			if(!is_array($col) or !is_array($value))
-				$this->system->log->error("Driver mysql: Impossibile eseguire la scrittura, array non validi", __LINE__);
+				$this->system->log->error("Driver sqlite: Impossibile eseguire la scrittura, array non validi", __LINE__);
 			$query = "INSERT INTO $table SET (";
 			foreach($col as $val)
 				$query .= $val . ", ";
@@ -141,7 +171,7 @@
 
 		public function read($table, $col = array('*'), $where = "", $return = 1) {
 			if(!is_array($col))
-				$this->system->log->error("Driver mysql: Impossibile eseguire la lettura, array non validi", __LINE__);
+				$this->system->log->error("Driver sqlite: Impossibile eseguire la lettura, array non validi", __LINE__);
 
 			$query = "SELECT ";
 			foreach($col as $val)
@@ -164,9 +194,9 @@
 		public function update($table, $col = array(), $value = array(), $where = "") {
 			if(!_ENABLE_DATABASE)	return;
 			if(!is_array($value) or !is_array($col))
-				$this->system->log->error("Driver mysql: Impossibile eseguire la lettura, array non validi", __LINE__);
+				$this->system->log->error("Driver sqlite: Impossibile eseguire la lettura, array non validi", __LINE__);
 			if(count($value) != count($col))
-				$this->system->log->error("Driver mysql: Impossibile eseguire la lettura, valori array non corrispondenti", __LINE__);
+				$this->system->log->error("Driver sqlite: Impossibile eseguire la lettura, valori array non corrispondenti", __LINE__);
 			$query = "UPDATE ".$table." SET ";
 			for($i = 0; $i<count($col); $i++)
 				$query .= $col[$i]."='".$value[$i]."', ";
@@ -180,31 +210,39 @@
 		public function numRows($query) {
 			if(_ENABLE_DATABASE)					
 				if($this->conn) {
-					$result = mysql_query($query, $this->db);										
+					// Num rows not implemented in SQLITE3 library :(
+					$result = $this->nonQuery($query);										
 					if(!$result)
-						$this->system->log->error("Driver mysql: Query errata, errore: ".mysql_error(), __LINE__);
-					$result = mysql_num_rows($result);
+						$this->system->log->error("Driver sqlite: Query errata, errore: ".mysql_error(), __LINE__);
+					
+					$count = 0;
+					while($row = $result->fetchArray())
+						$count++;
+					
 					$this->lastResult = $result;
-					return $result;
+					return $count;
 				}
 				else
 					$this->system->log->error("Driver mysql: Impossibile eseguire la query, connessione non avvenuta", __LINE__);
 			}
 
 		public function fetch_assoc($result) {
-			if(!_ENABLE_DATABASE)	return;
-			if(!$result)
-				$this->system->log->error("Driver mysql: Impossibile eseguire fetch_assoc, query non valida", __LINE__);
-
-			return mysql_fetch_assoc($result);
+			if(!_ENABLE_DATABASE) 
+				return;
+				
+			if(!$result) {
+				$this->system->log->warning("Driver mysql: Impossibile eseguire fetch_assoc, query non valida", __LINE__);
+				return;
+			}
+			return $result->fetchArray();
 		}
 
 		private function refreshDbStruct() {											
 			if(!_ENABLE_DATABASE)	return;
-			$res = $this->query("SHOW TABLES FROM "._DB_NAME, true, true);
+			$res = $this->nonQuery("SELECT name FROM main.sqlite_master WHERE type='table';");
 			$table = array();
 
-			while($row = mysql_fetch_array($res))
+			while($row = $res->fetchArray())
 				$table[] = "$row[0]";
 
 			$tableConf = array();
@@ -219,47 +257,62 @@
 
 			foreach($GLOBALS["_DB_STRUCT"] as $tables => $struct) {
 				$query = "";
+			
 				if($table == "" or !in_array($tables, $table)) {
-
+					
 					$query .= "CREATE TABLE "._DB_PREFIX.strtolower($tables)." (";
 					foreach($struct as $filed => $type) {
 						$query.= "`$filed` $type, ";
 					}
 					$query = substr($query, 0, -2).');';
+					
+					// FIX for auto_increment not supported by Sqlite
+					// for make an auto increment field in sqlite: CREATE TABLE table (field INTEGER PRIMARY KEY, ... );
+					
+					// Replace "auto_increment" string
+					$query = str_ireplace("auto_increment", "", $query);
+					
+					// TODO: check the field type
+					// if the field if auto_increment the type must me INTEGER not INT(n)
+			
 					$this->system->log->warning("Query eseguita: $query", __LINE__);
-					mysql_query($query);
+					$this->nonQuery($query);
 
 				}
 				else if(in_array($tables, $table)) {
-					$res = mysql_query("SHOW COLUMNS FROM $tables");
+					$res = $this->db->query("PRAGMA table_info($tables)");
 					$field_array = array();
-					while($row = mysql_fetch_array($res))
-						$field_array[] = "$row[0]";
+				
+					while($row = $res->fetchArray()) {
+						$field_array[] = $row["name"];
+					}	
+					
 					foreach($struct as $filed => $type) {
 						if (!in_array($filed, $field_array)) {
 							$query = "ALTER TABLE $tables ADD `$filed` $type NOT NULL;";
 							$this->system->log->warning("Query eseguita: $query", __LINE__);
-							mysql_query($query);
+							$this->query($query);
 						}
 					}
 				}
 			}
 			foreach($table as $key => $tableDb) {
 				if(!in_array(strtolower($tableDb), $tableConf)) {
-					$res = mysql_query("DROP TABLE ".$tableDb);
+					$res = $this->query("DROP TABLE ".$tableDb);
 					if($res)
 						$this->system->log->warning("Tabella cancellata: $tableDb", __LINE__);
 				}
 				else {
-					$res = mysql_query("SHOW COLUMNS FROM $tableDb");
+					$res = $this->nonQuery("PRAGMA table_info($tableDb)");
 					$field = array();
-
-					while($row = mysql_fetch_array($res))
-						$field[] = "$row[0]";
+				
+					while($row = $res->fetchArray()) {
+						$field[] = $row["name"];
+					}	
 
 					foreach($field as $key=>$fieldDb) {
 						if(!in_array($fieldDb, $fieldConf[$tableDb])) {
-							$res = mysql_query("ALTER TABLE `$tableDb` DROP `$fieldDb`;");
+							$res = $this->query("ALTER TABLE `$tableDb` DROP `$fieldDb`;");
 							if($res)
 								$this->system->log->warning("Campo cancellato: $fieldDb nella tabella $tableDb", __LINE__);
 						}
