@@ -3,7 +3,9 @@
 Author: Loris 'D4ng3R' Mich 
 
 Email: <<loris@lorismich.it>>
+
 Mailing list: poof@freelist.org
+
 Website: www.lorismich.it
 
 
