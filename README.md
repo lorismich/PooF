@@ -6,6 +6,14 @@ Email: <<loris@lorismich.it>>
 
 Website: www.lorismich.it
 
+### Features ###
+- MVC design pattern
+- Global Object for: newsletter, statistics, users ecc.
+- Support for mysql and sqlite database
+- Create and update database from simply php file
+
+And more!
+
 ### Requirements ###
 - Apache
 - MySQL
