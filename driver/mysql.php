@@ -198,6 +198,10 @@
 
 			return mysql_fetch_assoc($result);
 		}
+		
+		public function get_last_id() {
+			return mysql_insert_id($this->db);
+		}
 
 		private function refreshDbStruct() {											
 			if(!_ENABLE_DATABASE)	return;
